@@ -61,18 +61,36 @@ static inline void digitalWrite2f(GPIO_pin_t pin, uint8_t value);
 // ===========================================================================
 //
 
-// Note: the ARDUINO2_IOREGS_ABOVEFF is defined in pins2_arduino.h
-#if ARDUINO2_PREFER_SPEED
-	#define		ARDUINO2_USE_INLINE_FUNCTIONS	1
+// User configuration defined in main.cpp or default value in pins2_arduino.h
+#if GPIO2_PREFER_SPEED
+	#define		GPIO2_USE_INLINE_FUNCTIONS	1
 #else
-	#define		ARDUINO2_USE_INLINE_FUNCTIONS	0
+	#define		GPIO2_USE_INLINE_FUNCTIONS	0
 #endif
 
-// Note: the ARDUINO2_IOREGS_ABOVEFF is defined in pins2_arduino.h
-#if ARDUINO2_IOREGS_ABOVEFF
-	#define	ARDUINO2_ATOMIC		ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+// Note: ATOMIC_BLOCK is macro in AVR Libc, but it cannot beused in current Arduino verison
+// (1.0.5-r2, because the compiler options are not set to support C99 standard.
+// That is why there is our own version for now
+#define	GPIO2_ATOMIC_BEGIN		{ uint8_t matom_oldSREG = SREG; cli();
+#define GPIO2_ATOMIC_END		  SREG = matom_oldSREG;	__asm__ volatile ("" ::: "memory"); }
+/*
+// Version which can be used if the program is compiled using std=c99
+#define	GPIO2_ATOMIC_BEGIN		ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+#define GPIO2_ATOMIC_END			}
+*/
+
+// Note: the ARDUINO2_IOREGS_ABOVEFF is defined in pins2_arduino.h, independently for each
+// Arduino variant.
+// GPIO2_OPTIONAL_ATOMIC_BEGIN is used in digitalWrite for the code which may result in single
+// instruction for AVR MCUs with I/O register address below 0xFF but may result in more
+// instructions for AVR MCUs with some registers above this address.
+// For parts of code which should be always atomic, use GPIO2_ATOMIC_BEGIN
+#if GPIO2_IOREGS_ABOVEFF
+	#define	GPIO2_OPTIONAL_ATOMIC_BEGIN		GPIO2_ATOMIC_BEGIN
+	#define GPIO2_OPTIONAL_ATOMIC_END		GPIO2_ATOMIC_END
 #else
-	#define	ARDUINO2_ATOMIC
+	#define	GPIO2_OPTIONAL_ATOMIC_BEGIN
+	#define	GPIO2_OPTIONAL_ATOMIC_END
 #endif
 
 
@@ -146,10 +164,9 @@ void pinMode2f(GPIO_pin_t pin, uint8_t mode )
 
 	 if (__builtin_constant_p(pin) && __builtin_constant_p(mode))
 	 {
-		 // ARDUINO2_ATOMIC expands to nothing when not needed (atmega328)
+		 // GPIO2_OPTIONAL_ATOMIC_ expands to nothing when not needed (atmega328)
 		 // and to ATOMIC_BLOCK when needed (atmega2560)
-		 ARDUINO2_ATOMIC
-		 {
+		 GPIO2_OPTIONAL_ATOMIC_BEGIN
 			 // fast version which results in single instruction
 			 if ( mode == OUTPUT )
 			 {
@@ -169,38 +186,35 @@ void pinMode2f(GPIO_pin_t pin, uint8_t mode )
 					GPIO_PORT_REG(pin) &= ~GPIO_PIN_MASK(pin);
 				}
 			 }
-		 }
+		 GPIO2_OPTIONAL_ATOMIC_END
 	 }
 	 else
 	 {
 
-#if	ARDUINO2_USE_INLINE_FUNCTIONS
+#if	GPIO2_USE_INLINE_FUNCTIONS
 
 		if ( mode == OUTPUT )
 		{
-			ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
-			{
+			GPIO2_ATOMIC_BEGIN
 				GPIO_DDR_REG(pin) |= GPIO_PIN_MASK(pin);
-			}
+			GPIO2_ATOMIC_END
 		}
 		else
 		{
 			if ( mode == INPUT_PULLUP )
 			{
-				ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
-				{
+				GPIO2_ATOMIC_BEGIN
 					GPIO_DDR_REG(pin) &= ~GPIO_PIN_MASK(pin);
 					GPIO_PORT_REG(pin) |= GPIO_PIN_MASK(pin);
-				}
+				GPIO2_ATOMIC_END
 			}
 			else
 			{
 				// input mode without pull-up
-				ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
-				{
+				GPIO2_ATOMIC_BEGIN
 					GPIO_DDR_REG(pin) &= ~GPIO_PIN_MASK(pin);
 					GPIO_PORT_REG(pin) &= ~GPIO_PIN_MASK(pin);
-				}
+				GPIO2_ATOMIC_END
 			}
 		}
 
@@ -240,7 +254,7 @@ uint8_t digitalRead2f(GPIO_pin_t pin)
 	else
 	{
 
-#if	ARDUINO2_USE_INLINE_FUNCTIONS
+#if	GPIO2_USE_INLINE_FUNCTIONS
 
 		if ((GPIO_PIN_REG(pin) & GPIO_PIN_MASK(pin)) != 0)
 			return HIGH;
@@ -284,34 +298,31 @@ void digitalWrite2f(GPIO_pin_t pin, uint8_t value)
 	 {
 		 // ARDUINO2_ATOMIC expands to nothing when not needed (atmega328)
 		 // and to ATOMIC_BLOCK when needed (atmega2560)
-		 ARDUINO2_ATOMIC
-		 {
+		 GPIO2_OPTIONAL_ATOMIC_BEGIN
 			 if ( value == 0 )
 				 GPIO_PORT_REG(pin) &= ~GPIO_PIN_MASK(pin);
 			 else
 				 GPIO_PORT_REG(pin) |= GPIO_PIN_MASK(pin);
-		 }
+		 GPIO2_OPTIONAL_ATOMIC_END
 	 }
 	 else
 	 {
 		 // If pin or value must be computed in runtime, resulting code
 		 // will always require disabled interrupts.
-#if ARDUINO2_USE_INLINE_FUNCTIONS
+#if GPIO2_USE_INLINE_FUNCTIONS
 
 		 // NOTE: if you make change here, make it also in internal_digitalWrite2()!
 		 if ( value == 0 )
 		 {
-			 ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
-			 {
+			 GPIO2_ATOMIC_BEGIN
 			 	 GPIO_PORT_REG(pin) &= ~GPIO_PIN_MASK(pin);
-			 }
+			 GPIO2_ATOMIC_END
 		 }
 		 else
 		 {
-			 ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
-			 {
+			 GPIO2_ATOMIC_BEGIN
 				 GPIO_PORT_REG(pin) |= GPIO_PIN_MASK(pin);
-			 }
+			 GPIO2_ATOMIC_END
 		 }
 
 #else
