@@ -32,7 +32,7 @@ void loop() {
  
  *  With INPUT (without pull up): the logical level at the pin is not defined and
  *  the program would print most of them as LOW. That's why the test is for HIGH and
- *  we pring pins which are high. 
+ *  we are pring pins which are high. 
  *  NOTE that it is normat that some pins will be reported high even if not connected to 5V!
  *  But if you connect any pin to +5V (directly od through e.g. 1 k resistor) it should be
  *  printed as HIGH for sure.
