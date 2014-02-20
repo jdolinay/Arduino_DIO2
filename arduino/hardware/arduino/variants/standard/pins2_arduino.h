@@ -9,17 +9,16 @@
  *
  *  Howto port this file to another Arduino variant:
  *  1) Define GPIO_pin_t enum with pin codes
- *  2) Check/modify the macros for getting addresses of I/O registers
- *  3) Check/modify the functions pinMode2f, digitalRead2f and digitalWrite2f,
+ *  2) Set the number of pins to proper value in GPIO_PINS_NUMBER 
+ *  3) Check/modify the macros for getting addresses of I/O registers
  *  4) Define the gpio_pins_progmem array with the values from GPIO_pin_t enum
- *  5) Modify the range check in Arduino_to_GPIO_pin
- *
+ *  
  *  Notes:
  *  Step 1) you need the datasheet of the AVR MCU used in your variant. Check the
  *  addresses of the registers for controlling GPIO ports (typically there is
  *  "Register summary" chapter in the datasheet with the addresses. Registers for
  *  port A start at address 0. See the definition below for Atmega328 as an example.
- *  Step 2) if the addresses of all the GPIO registers are lower than 0xFF, you do not
+ *  Step 3) if the addresses of all the GPIO registers are lower than 0xFF, you do not
  *  need to modify the macros. If there are some registers with higher address (such as
  *  the case in Atmega 2560 used in Arduino Mega), you need to encode the address into
  *  single byte or use different approach. For example see the pins2_arduino.h for Arduino mega.
