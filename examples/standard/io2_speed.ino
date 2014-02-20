@@ -37,15 +37,15 @@ void loop() {
 	for ( cnt = 100; cnt > 0; cnt-- )
 	{
           // Standard Arduino function
-          //digitalWrite(pin, HIGH);    // x us; x us with timer-pin check disabled 
+          digitalWrite(pin, HIGH);    // 4.1 us; 3.40 us with timer-pin check disabled 
           
           // New functions
 	  // Arduino compatible version using pin as a simple integer
-	    //digitalWrite2(pin, HIGH);		// x us  (x us with GPIO2_PREFER_SPEED = 0)
-	    //digitalWrite2(7, HIGH);		// x us  
+	    //digitalWrite2(pin, HIGH);		// 2.00 us  (2.80 us with GPIO2_PREFER_SPEED = 0)
+	    //digitalWrite2(7, HIGH);		// 0.80 us  (1.80 us with GPIO2_PREFER_SPEED = 0)
           // Fast version using pin code as a variable
-	    digitalWrite2f(my_pin, HIGH);	// x us (x us with GPIO2_PREFER_SPEED = 0)
-	    //digitalWrite2f(DP7, HIGH);        // x us 
+	    //digitalWrite2f(my_pin, HIGH);	// 1.10 us (1.90 us with GPIO2_PREFER_SPEED = 0)
+	  //  digitalWrite2f(DP7, HIGH);        // 0.60 us  ( 0.60 us with GPIO2_PREFER_SPEED = 0)
 	}
 	end = micros();
 
@@ -53,4 +53,4 @@ void loop() {
 	Serial.print(end - start);
 	delay(5000);
 }
-
+ 
