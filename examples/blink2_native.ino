@@ -1,5 +1,6 @@
 /*
-  Blink2 - Blink example modified for using digital I/O 2 instead of standard Arduino digital I/O.
+  Blink2 - Blink example modified for using digital I/O 2 instead of standard 
+        Arduino digital I/O.
  */
 #include "arduino2.h"  // include the fast I/O 2 functions
 

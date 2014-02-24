@@ -1,11 +1,16 @@
 /*
 Speed test of fast digital I/O for Arduino Mega
-14.2.2014
+
+Un-comment the version óf digitalWrite you wish to test in the
+for loop below.
+The program will print time in micro seconds it takes to perform 100-times
+digitalWrite().
+
+24.2.2014
 */
 
-//#include "arduino.h"
-// Set to 1 to have fast but bigger program (inline digital I/O functions)
-// set 0 to have slower and smaller program 
+// Set to 1 to have fast but (maybe) bigger program (inline digital I/O functions)
+// set 0 to have slower and (sometimes) smaller program 
 #define	GPIO2_PREFER_SPEED	1
 #include "arduino2.h"
 
@@ -40,12 +45,13 @@ void loop() {
           //digitalWrite(pin, HIGH);    // 6.8 us; 3.40 us with timer-pin check disabled 
           
           // New functions
-	  // Arduino compatible version using pin as a simple integer
-	    //digitalWrite2(pin, HIGH);		// 2.20 us  (3.15 us with GPIO2_PREFER_SPEED = 0)
-	    //digitalWrite2(7, HIGH);		// 1.00 us  
+	      // Arduino compatible version using pin as a simple integer
+	      //digitalWrite2(pin, HIGH);		// 2.20 us  (3.15 us with GPIO2_PREFER_SPEED = 0)
+	      //digitalWrite2(7, HIGH);		// 1.00 us  
+          
           // Fast version using pin code as a variable
-	    digitalWrite2f(my_pin, HIGH);	// 1.40 us (2.30 us with GPIO2_PREFER_SPEED = 0)
-	    //digitalWrite2f(DP7, HIGH);        // 0.75 us 
+	         digitalWrite2f(my_pin, HIGH);	// 1.40 us (2.30 us with GPIO2_PREFER_SPEED = 0)
+	      //digitalWrite2f(DP7, HIGH);        // 0.75 us 
 	}
 	end = micros();
 

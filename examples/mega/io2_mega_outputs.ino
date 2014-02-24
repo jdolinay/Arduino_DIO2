@@ -3,8 +3,8 @@ Output test of fast digital I/O for Arduino Mega
 14.2.2014
 */
 
-// Set to 1 to have fast but bigger program (inline digital I/O functions)
-// set 0 to have slower and smaller program 
+// Set to 1 to have fast but (maybe) bigger program (inline digital I/O functions)
+// set 0 to have slower and (sometimes) smaller program 
 #define	GPIO2_PREFER_SPEED	1
 #include "arduino2.h"
 

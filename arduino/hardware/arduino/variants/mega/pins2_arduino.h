@@ -5,7 +5,7 @@
  *      Author: Jan Dolinay
  *
  *  Alternate version of digital input/output for Arduino.
- *  This is version for Arduino Mega.
+ *  This file is for Arduino Mega.
  *
  *  Howto port this file to another Arduino variant:
  *  1) Define GPIO_pin_t enum with pin codes
@@ -13,21 +13,23 @@
  *  3) Check/modify the macros for getting addresses of I/O registers
  *  4) Define the gpio_pins_progmem array with the values from GPIO_pin_t enum
  *  
- *  Notes:
+ * Notes:
  *  Step 1) you need the datasheet of the AVR MCU used in your variant. Check the
  *  addresses of the registers for controlling GPIO ports (typically there is
- *  "Register summary" chapter in the datasheet with the addresses. Registers for
- *  port A start at address 0. See the definition below for Atmega328 as an example.
- *  Step 3) if the addresses of all the GPIO registers are lower than 0xFF, you do not
- *  need to modify the macros. If there are some registers with higher address (such as
- *  the case in Atmega 2560 used in Arduino Mega), you need to encode the address into
- *  single byte or use different approach. For example see the pins2_arduino.h for Arduino mega.
- *
- * 
- *	This is free software; you can redistribute it and/or
+ *  "Register summary" chapter in the datasheet with the addresses. 
+ *  See the definition below for Atmega328 as an example.
+ *  Step 3) if the addresses of all the GPIO registers are lower than 0xFF, you 
+ *  can use the simple macros as defined here.
+ *  If there are some registers with higher address (such as the case in 
+ *  Atmega 2560 used in Arduino Mega), we need to encode the address into
+ *  single byte or use a different approach. Use the macros defined in 
+ *  pins2_arduino.h for Arduino mega.
+ *  
+ *  
+  This is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
   License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
+  version 3 of the License, or (at your option) any later version.
 
   This library is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -67,7 +69,7 @@
 #define	  GPIO2_IOREGS_ABOVEFF	1
 
 
-// Unfortunately we cannot use the PORTA etc. definitions from avr/io.h in the
+// Unfortunately, we cannot use the PORTA etc. definitions from avr/io.h in the
 // GPIO_MAKE_PINCODE macro, so I define the port register addresses here to make
 // it more comfortable to define the pins
 // This is the address of the port register, e.g. PORTA or PORTB, from the datasheet.
@@ -99,7 +101,7 @@
  * the user from calling our digitalRead/Write with invalid pin numbers.
  *
  * Arduino Mega note: The registers for port H and above have addresss bigger than
- * 1 byte, so we have work with the pin code more than with standard arduino.
+ * 1 byte, so we have to work with the pin code more than in standard Arduino.
  * Adress ranges:
  * PINA  	0 (+0x20) = 0x20
  * DDRA  	1

@@ -5,7 +5,7 @@
  *      Author: Jan Dolinay
  *
  *  Alternate version of digital input/output for Arduino.
- *  This is version for Arduino Standard (Uno).
+ *  This is file for Arduino Standard (Uno).
  *
  *  Howto port this file to another Arduino variant:
  *  1) Define GPIO_pin_t enum with pin codes
@@ -16,19 +16,20 @@
  *  Notes:
  *  Step 1) you need the datasheet of the AVR MCU used in your variant. Check the
  *  addresses of the registers for controlling GPIO ports (typically there is
- *  "Register summary" chapter in the datasheet with the addresses. Registers for
- *  port A start at address 0. See the definition below for Atmega328 as an example.
- *  Step 3) if the addresses of all the GPIO registers are lower than 0xFF, you do not
- *  need to modify the macros. If there are some registers with higher address (such as
- *  the case in Atmega 2560 used in Arduino Mega), you need to encode the address into
- *  single byte or use different approach. For example see the pins2_arduino.h for Arduino mega.
+ *  "Register summary" chapter in the datasheet with the addresses. 
+ *  See the definition below for Atmega328 as an example.
+ *  Step 3) if the addresses of all the GPIO registers are lower than 0xFF, you 
+ *  can use the simple macros as defined here.
+ *  If there are some registers with higher address (such as the case in 
+ *  Atmega 2560 used in Arduino Mega), we need to encode the address into
+ *  single byte or use a different approach. Use the macros defined in 
+ *  pins2_arduino.h for Arduino mega.
  *
  *
-
   This is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
   License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
+  version 3 of the License, or (at your option) any later version.
 
   This library is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -56,8 +57,9 @@
 #endif
 
 
-// GPIO2_IOREGS_ABOVEFF - set to one if the Atmega used for this Arduino variant has
-// some I/O registers at address higher than 0xff (e.g. Atmega2560 in Arduino Mega).
+// GPIO2_IOREGS_ABOVEFF - set to one if the Atmega MCU used for this Arduino 
+// variant has some I/O registers at address higher than 0xff 
+// (e.g. Atmega2560 in Arduino Mega).
 // In this case we must always disable interrupts in digitalWrite and pinMode,
 // because the registers will not be manipulated by single instruction (SBI, CBI),
 // because these instructions only work on locations below 0xFF.
@@ -66,7 +68,7 @@
 // For Arduino Mega (ATmega1280 or ATmega2560) set to 1
 // If not sure, set to 1 (this is always safe option)
 //
-#define	  GPIO2_IOREGS_ABOVEFF	1
+#define	  GPIO2_IOREGS_ABOVEFF	0
 
 
 // Helper macro to create the pin code from port register address and pin number.
@@ -78,7 +80,6 @@
 // GPIO_MAKE_PINCODE macro, so I define the port register addresses here to make
 // it more comfortable to define the pins
 // This is the address of the port register, e.g. PORTA or PORTB, from the datasheet.
-//#define		MYPORTA		(0x22)
 #define		MYPORTB		(0x25)
 #define		MYPORTC		(0x28)
 #define		MYPORTD		(0x2B)
@@ -96,10 +97,10 @@
 */
 enum GPIO_pin_enum
 {
-	// Note: The invalid value can be 0 which means digitalWrite will write to reserved address
-	// on Atmega 328 used in Arduino Uno,
-	// or it can be any valid port register - as long as the bit mask in upper byte is 0, the
-	// operation on this register will have no effect.
+	// Note: The invalid value can be 0 which means digitalWrite will write to
+    // reserved address on Atmega 328 used in Arduino Uno,
+	// or it can be any valid port register - as long as the bit mask in upper 
+    // byte is 0, the operation on this register will have no effect.
 	DP_INVALID = 0x0025,
 	DP0 = GPIO_MAKE_PINCODE(MYPORTD,0),
 	DP1 = GPIO_MAKE_PINCODE(MYPORTD,1),
@@ -126,10 +127,10 @@ enum GPIO_pin_enum
 typedef	enum GPIO_pin_enum  GPIO_pin_t;
 
 // Number of GPIO pins.
-// Used in Arduino_to_GPIO_pin
+// Used in Arduino_to_GPIO_pin function
 #define		GPIO_PINS_NUMBER		(20)
 
-/*
+/*   
 // "raw" version of the pin definition using port address and mask directly
 enum GPIO_pin_t
 {

@@ -1,11 +1,16 @@
 /*
 Speed test of fast digital I/O for Arduino Uno (Standard)
-14.2.2014
+
+Un-comment the version óf digitalWrite you wish to test in the
+for loop below.
+The program will print time in micro seconds it takes to perform 100-times
+digitalWrite().
+
+24.2.2014
 */
 
-//#include "arduino.h"
-// Set to 1 to have fast but bigger program (inline digital I/O functions)
-// set 0 to have slower and smaller program 
+// Set to 1 to have fast but (maybe) bigger program (inline digital I/O functions)
+// set 0 to have slower and (sometimes) smaller program 
 #define	GPIO2_PREFER_SPEED	1
 #include "arduino2.h"
 
@@ -27,7 +32,7 @@ void loop() {
       uint8_t cnt;
     
 	// Blink the LED to see if the program is running
-	digitalWrite2(13, HIGH );		// version with pin number conversion
+	digitalWrite2(13, HIGH );		
 	delay(1000);
 	digitalWrite2(13, LOW );
 	delay(1000);
@@ -40,12 +45,13 @@ void loop() {
           digitalWrite(pin, HIGH);    // 4.1 us; 3.40 us with timer-pin check disabled 
           
           // New functions
-	  // Arduino compatible version using pin as a simple integer
-	    //digitalWrite2(pin, HIGH);		// 2.00 us  (2.80 us with GPIO2_PREFER_SPEED = 0)
-	    //digitalWrite2(7, HIGH);		// 0.80 us  (1.80 us with GPIO2_PREFER_SPEED = 0)
+	      // Arduino compatible version using pin as a simple integer
+	      //digitalWrite2(pin, HIGH);		// 2.00 us  (2.80 us with GPIO2_PREFER_SPEED = 0)
+	      //digitalWrite2(7, HIGH);		// 0.80 us  (1.80 us with GPIO2_PREFER_SPEED = 0)
+          
           // Fast version using pin code as a variable
-	    //digitalWrite2f(my_pin, HIGH);	// 1.10 us (1.90 us with GPIO2_PREFER_SPEED = 0)
-	  //  digitalWrite2f(DP7, HIGH);        // 0.60 us  ( 0.60 us with GPIO2_PREFER_SPEED = 0)
+	      //digitalWrite2f(my_pin, HIGH);	// 1.10 us (1.90 us with GPIO2_PREFER_SPEED = 0)
+	      //digitalWrite2f(DP7, HIGH);        // 0.60 us  ( 0.60 us with GPIO2_PREFER_SPEED = 0)
 	}
 	end = micros();
 

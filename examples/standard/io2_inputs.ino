@@ -3,8 +3,8 @@ Output test of fast digital I/O for Arduino Uno (Standard)
 14.2.2014
 */
 
-// Set to 1 to have fast but bigger program (inline digital I/O functions)
-// set 0 to have slower and smaller program 
+// Set to 1 to have fast but (maybe) bigger program (inline digital I/O functions)
+// set 0 to have slower and (sometimes) smaller program 
 #define	GPIO2_PREFER_SPEED	1
 #include "arduino2.h"
 
@@ -31,11 +31,11 @@ void loop() {
  * into serial terminal the number of the pin you connected to GND.
  
  *  With INPUT (without pull up): the logical level at the pin is not defined and
- *  the program would print most of them as LOW. That's why the test is for HIGH and
- *  we are pring pins which are high. 
- *  NOTE that it is normat that some pins will be reported high even if not connected to 5V!
- *  But if you connect any pin to +5V (directly od through e.g. 1 k resistor) it should be
- *  printed as HIGH for sure.
+ *  the program would print most of them as LOW. That's why the test is for HIGH
+ *  and we are printing pins which are high. 
+ *  NOTE that it is normar that some pins will be reported high even if not 
+ *  connected to 5V! But if you connect any pin to +5V (directly or through 
+ *  e.g. 1 k resistor) it should be printed as HIGH for sure.
  *
  *  NOTE: pins 0 and 1 are not working (used for serial communication)
  *  pin 13 is not working (used for on-board LED)
@@ -60,9 +60,9 @@ void test_inputs_pullup(void)
   {
     if ( pin != 13 && digitalRead2(pin) == LOW )
     {
-	Serial.print("pin low: ");
-	Serial.println(pin);
-	delay(500);
+	   Serial.print("pin low: ");
+	   Serial.println(pin);
+	   delay(500);
     }
   }
 
@@ -87,9 +87,9 @@ void test_inputs_no_pullup(void)
   {
     if ( pin != 13 && digitalRead2(pin) == HIGH )
     {
-	Serial.print("pin high: ");
-	Serial.println(pin);
-	delay(500);
+	   Serial.print("pin high: ");
+	   Serial.println(pin);
+	   delay(500);
     }
   }
 
