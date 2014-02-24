@@ -23,7 +23,7 @@ void setup() {
   // put your setup code here, to run once:
   pinMode2(arduino_led_pin, OUTPUT);
   pinMode2(pin, OUTPUT);
-  //Serial.begin(9600);
+  Serial.begin(9600);
 }
 
 void loop() {

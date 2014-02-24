@@ -6,7 +6,7 @@ Works for Arduino Uno and Arduino Mega
 Contents of this package:
 -------------------------
 arduino	- the files to be placed into Arduino folder for the new I/O to be available.
-        Place the file into the same subfolders as they are here.
+        Place the files into the same subfolders as they are here.
 examples - example sketches for Arduino Uno and Mega to test the new digital I/O.
 
 

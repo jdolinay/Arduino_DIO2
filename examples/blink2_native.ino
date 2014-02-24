@@ -15,7 +15,7 @@ void setup() {
 void loop() {
   digitalWrite2f(led_pin, HIGH);   // turn the LED on (HIGH is the voltage level)
   delay(1000);               // wait for a second
-  digitalWrite2(led_pin, LOW);    // turn the LED off by making the voltage LOW
+  digitalWrite2f(led_pin, LOW);    // turn the LED off by making the voltage LOW
   delay(1000);               // wait for a second
 }
 
