@@ -1,5 +1,5 @@
 /*
-Output test of fast digital I/O for Arduino Mega
+Input test of fast digital I/O for Arduino Mega
 14.2.2014
 */
 

@@ -1,5 +1,5 @@
 /*
-Output test of fast digital I/O for Arduino Uno (Standard)
+Input test of fast digital I/O for Arduino Uno (Standard)
 14.2.2014
 */
 
