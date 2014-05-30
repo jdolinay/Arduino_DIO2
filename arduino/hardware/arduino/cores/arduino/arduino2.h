@@ -32,7 +32,7 @@
 #include <avr/interrupt.h>
 #include <util/atomic.h>
 
-#include "arduino.h"
+#include "Arduino.h"
 
 
 #ifdef __cplusplus

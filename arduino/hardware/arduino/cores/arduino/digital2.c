@@ -31,7 +31,7 @@
 #define	ARDUINO2_MAIN
 
 #include "pins2_arduino.h"		// Definitions specific for selected board
-#include "arduino.h"
+#include "Arduino.h"
 #include "arduino2.h"
 
 
