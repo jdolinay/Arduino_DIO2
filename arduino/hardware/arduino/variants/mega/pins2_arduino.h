@@ -258,7 +258,7 @@ const GPIO_pin_t PROGMEM gpio_pins_progmem[] = {
 		DP65, DP66, DP67, DP68,	DP69,
 };
 #else
-	extern GPIO_pin_t PROGMEM gpio_pins_progmem[];
+	extern const GPIO_pin_t PROGMEM gpio_pins_progmem[];
 #endif
 
 

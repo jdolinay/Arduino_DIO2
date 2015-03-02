@@ -193,7 +193,7 @@ const GPIO_pin_t PROGMEM gpio_pins_progmem[] = {
 		DP16, DP17, DP18, DP19,
 };
 #else
-	extern GPIO_pin_t PROGMEM gpio_pins_progmem[];
+	extern const GPIO_pin_t PROGMEM gpio_pins_progmem[];
 #endif
 
 
