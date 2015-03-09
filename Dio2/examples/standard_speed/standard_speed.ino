@@ -1,7 +1,7 @@
 /*
 Speed test of fast digital I/O for Arduino Uno (Standard)
 
-Un-comment the version óf digitalWrite you wish to test in the
+Un-comment the version of digitalWrite you wish to test in the
 for loop below.
 The program will print time in micro seconds it takes to perform 100-times
 digitalWrite().

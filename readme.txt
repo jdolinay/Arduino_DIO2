@@ -2,27 +2,84 @@ Fast digital I/O functions for Arduino.
 Created by Jan Dolinay, Feb. 2014
 Works for Arduino Uno and Arduino Mega
 
+Revision History
+----------------
+March 2015 - Version 1.0
+Directory structure changed so that this package can be installed as Arduino library.
+
+February 2014 - First release.
+
 
 Contents of this package:
 -------------------------
-arduino	- the files to be placed into Arduino folder for the new I/O to be available.
-        Place the files into the same subfolders as they are here.
+board - files with pin definitios for supported boards (Uno and Mega). This need to be copied to
+	appropriate location in your Arduino installation! (see instructions below).
 examples - example sketches for Arduino Uno and Mega to test the new digital I/O.
+src - source code of the library
 
 
 Howto use:
 -----------
-1. 
-    * Copy arduino2.h and digital2.c to [your arduino location]\hardware\arduino\cores\arduino\.
-    * Copy pins2_arduino.h to [your arduino location]\hardware\arduino\variants\standard\.
-    
-    If you use Arduino Mega, copy the pins2_arduino.h file to [your arduino location]\hardware\arduino\variants\mega\.
-    Note that the pin2_arduino.h file is different for Arduino standard and Arduino Mega! Chose the proper file for your Arduino variant.
+There are two ways how to use the I/O 2 functions in your program:
+1) Install as Arduino library (named Dio2)
+OR
+2) Copy 3 files into your Arduino installation
 
-2. Start Arduino IDE and create a new program (sketch) as you normally do. 
+
+Option 1 - Arduino library
+---------------------------
+Step 1: Install the DIO2 library as any other Arduino library, that is extract the downloaded files 
+into you Arduino libraries folder or use the automatic library install from the Arduino drop-down menu Sketch > Import Library
+
+Step 2: Copy the pin2_arduino.h file for the board(s) you plan to use into the appropriate folder 
+in your Arduino location.
+You will find this file in the attached zip file in 
+dio2\board\[board], where [board] is "standard" for Arduino Uno and "mega" for Arduino Mega.
+This destination folder is:
+For Arduino 1.6.0 IDE:
+[your_arduino_location]\hardware\arduino\avr\variants\[board]
+Examples: c:\arduino-1.6.0\hardware\arduino\avr\variants\standard  or c:\arduino-1.6.0\hardware\arduino\avr\variants\mega
+
+For the older Arduino 1.0.x IDE:
+[your_arduino_location]\hardware\arduino\variants\[board]
+Examples: c:\arduino-1.0.5-r2\hardware\arduino\variants\standard or c:\arduino-1.0.5-r2\hardware\arduino\variants\mega.
+
+
+Please note that the pin2_arduino.h file is different for Arduino standard and Arduino Mega. 
+Use the appropriate file for your Arduino variant.
+Also note that you are not overwriting anything in your Arduino installation and you can still 
+use the original functions.
+
+
+Option 2 - Copy required files to your Arduino location
+-------------------------------------------------------
+If you decide to use this option rather than using the library, you need to copy 3 files 
+into appropriate folders in your Arduino location. You will find these files in the attached zip file, 
+the source and destination locations are as follows:
+
+Arduino 1.6.0
+Copy arduino2.h and digital2.c from [zip file]\dio2\src\ to 
+[your_arduino_location]\hardware\arduino\avr\cores\arduino\.
+
+Copy pins2_arduino.h from [zip file]\dio2\board\standard or mega to 
+[your_arduino_location]\hardware\arduino\avr\variants\standard or mega.
+
+Arduino 1.0.x
+Copy arduino2.h and digital2.c from [zip file]\dio2\src\ to 
+[your_arduino_location]\hardware\arduino\cores\arduino\
+
+Copy pins2_arduino.h from [zip file]\dio2\board\standard or mega to 
+[your_arduino_location]\hardware\arduino\variants\standard or mega.
+
+Note that using this option 2 has one disadvantage: if you need to build a program for other Arduino variant than Uno or Mega, you will encounter build error because of missing pins2_arduino.h file for this variant. To solve this, you can copy the "dummy" pins2_arduino.h file provided in zip file]\dio2\board\dummy to the appropriate folder in the Arduino variants folder.
+
+
+
+
+Start Arduino IDE and create a new program (sketch) as you normally do. 
 You can now use the I/O 2 functions described below instead of the standard
 Arduino functions.
- 
+
  
  
 Functions which take simple pin number

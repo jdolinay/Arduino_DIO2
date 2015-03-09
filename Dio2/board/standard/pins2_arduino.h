@@ -130,39 +130,6 @@ typedef	enum GPIO_pin_enum  GPIO_pin_t;
 // Used in Arduino_to_GPIO_pin function
 #define		GPIO_PINS_NUMBER		(20)
 
-/*   
-// "raw" version of the pin definition using port address and mask directly
-enum GPIO_pin_t
-{
-	// Note: The invalid value can be 0 which means digitalWrite will write to reserved address
-	// on Atmega 328 used in Arduino Uno,
-	// or it can be any valid port register - as long as the bit mask in upper byte is 0, the
-	// operation on this register will have no effect.
-	DPINVALID = 0x0025,
-	DP0 = 0x012B,
-	DP1 = 0x022B,
-	DP2 = 0x042B,
-	DP3 = 0x082B,
-	DP4 = 0x102B,
-	DP5 = 0x202B,
-	DP6 = 0x402B,
-	DP7 = 0x802B,
-	DP8 = 0x0125,
-	DP9 = 0x0225,
-	DP10 = 0x0425,
-	DP11 = 0x0825,
-	DP12 = 0x1025,
-	DP13 = 0x2025,
-	DP14 = 0x0128,
-	DP15 = 0x0228,
-	DP16 = 0x0428,
-	DP17 = 0x0828,
-	DP18 = 0x1028,
-	DP19 = 0x2028,
-};
-*/
-
-
 // Macro to obtain bit mask of a pin from its code
 #define		GPIO_PIN_MASK(pin)		((uint8_t)((uint16_t)pin >> 8))
 
